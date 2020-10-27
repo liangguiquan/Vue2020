@@ -11,34 +11,46 @@
 
 <body>
     <div id="app">
-        <div class="goods" v-for="(goods, goodsIndex) in goodsList" :key="goods.id">
-            <div class="title">{{goods.title}}</div>
-            <ul class="type-list">
-                <li 
-                class="type" 
-                :class="{active: typeIndex === goods.index}" 
-                v-for="(type,typeIndex) in goods.typeList"
-                :key="type"
-                @click="addFilterHandle(typeIndex, goods, type, goodsIndex)"
-                >{{type}}</li>
-            </ul>
+        <div class="header">
+        <div class="container">
+            <div class="logo">todoList</div>
+            <div class="input-area">
+                <input type="text" @input="handleInput" :value="curTask">
+                <button @click="addTask">添加</button>
+            </div>
         </div>
-        <div class="choose-type">
-            <div>已选条件：</div>
-            <span 
-            class="no-goods"
-            v-if="!showFilterGoods"
-            >暂时没有选择过滤条件</span>
-            <ul 
-            class="filter-list"
-            v-else
-            >
-                <li v-for="(goods, goodsKey) in filterObj" :key="goods">
-                    {{goods}}
-                    <span class="delete-goods" @click="deleteFilterGoods(goodsKey)">x</span>
+        </div>
+        <div class="container">
+            <h2>
+                <span>正在进行</span>
+                <span class="task-num">{{needDoList.length}}</span>
+            </h2>
+            <ul class="task-list">
+                <li v-for="(task, index) in needDoList" :key="task.id">
+                    <div>
+                        <input type="checkbox" @change="doCheck(index, 'need')">
+                        <span>{{task.title}}</span>
+                    </div>
+                    <button @click="deleteTask(index, 'need')">删除</button>
                 </li>
             </ul>
         </div>
+        <div class="container">
+            <h2>
+                <span>已经完成</span>
+                <span class="task-num">{{completeList.length}}</span>
+            </h2>
+            <ul class="complete-list task-list">
+                <li v-for="(task,index) in completeList" :key="task.id">
+                    <div>
+                        <input type="checkbox" @change="doCheck(index, 'complete')">
+                        <span>{{task.title}}</span>
+                    </div>
+                    <button @click="deleteTask(index, 'complete')">删除</button>
+                </li>
+            </ul>
+        </div>
+
     </div>
 
     <script>
@@ -47,48 +59,43 @@
         const vm = new Vue({
             el: '#app',
             data: {
-                goodsList: [
-                    {
-                        title: '上装',
-                        typeList: ['全部', '针织衫', '毛呢外套', 'T恤', '羽绒服', '棉衣', '卫衣', '风衣'],
-                        id: 1,
-                    },
-                    {
-                        title: '裤装',
-                        typeList: ['全部', '牛仔裤', '小脚/铅笔裤', '休闲裤', '打底裤', '哈伦裤'],
-                        id: 2,
-                    },
-                    {
-                        title: '裙装',
-                        typeList: ['全部', '连衣裙', '半身裙', '长袖连衣裙', '中长款连衣裙'],
-                        id: 3,
-                    }
-                ],
-                filterObj: {},
-                showFilterGoods: false
+                curTask: '',
+                needDoList: [],
+                completeList:[]
             },
             methods: {
-                addFilterHandle(typeIndex, goods, type, goodsIndex){
-                    if(type === '全部'){
+                handleInput(e){
+                    // console.log(e.target.value);
+                    this.curTask = e.target.value;
+                },
+                addTask(){
+                    if(this.curTask === ''){
                         return;
                     }
-                    this.showFilterGoods = true;
-                    goods.index = typeIndex;
-                    vm.$set(this.filterObj, goodsIndex, type);
+                    this.needDoList.push({
+                        title: this.curTask,
+                        id: Math.random()
+                    });
+                    this.curTask = '';
                 },
-                deleteFilterGoods(goodsKey){
-                    this.$delete(this.filterObj, goodsKey);
-                    this.goodsList[goodsKey].index = 0;
-                    this.changeShowFilter();
+                deleteTask(index, type){
+                    const toDoList = type === 'need'? this.needDoList: this.completeList;
+                    toDoList.splice(index, 1);
                 },
-                changeShowFilter(){
-                    const filterObjStr = JSON.stringify(this.filterObj);
-                    this.showFilterGoods = filterObjStr !== '{}';
+                doCheck(index, type){
+                    if(type === 'need'){
+                        let completeTask = this.needDoList.splice(index, 1);
+                        this.completeList.push(...completeTask);
+                    }
+                    else {
+                        let noCompleteTask = this.completeList.splice(index, 1);
+                        this.needDoList.push(...noCompleteTask);
+                    }
                 }
             }
         });
 
-        vm.goodsList.forEach(item => vm.$set(item, 'index', 0));   // 还没学到计算属性，暂时使用这种方法
+        
 
 
     </script>
