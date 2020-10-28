@@ -1,135 +1,64 @@
 * {
     margin: 0;
     padding: 0;
-}
-
-ul, li {
     list-style: none;
-}
-
-body {
-    background-color: #f40;
+    font-size: 14px;
+    font-style: normal;
 }
 
 #app {
-    box-sizing: border-box;
-    width: 500px;
-    margin: 2px auto 0;
-    padding: 20px;
-    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    width: 1000px;
+    margin: 10px auto;
+    border: 1px solid #000;
     border-radius: 5px;
 }
 
-#app .store {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
+#app .area {
+    width: 50%;
 }
 
-#app .store .select-all {
-    margin-right: 10px;
+#app .area:first-child {
+    border-right: 1px dashed #000;
 }
 
-#app .store .store-name {
-    font-weight: bold;
-    font-size: 14px;
-}
-
-#app .course-list .course {
-    display: flex;
-    margin-bottom: 20px;
-}
-
-#app .course-list .course-radio {
-    width: 16px;
-    height: 16px;
-    margin-right: 10px;
-    transform: translateY(32px);
-}
-
-#app .course-list .poster {
-    width: 80px;
-    height: 80px;
-}
-
-#app .course-list .content {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 410px;
-    margin-left: 10px;
-    font-size: 12px;
-}
-
-#app .course-list .title {
-    margin-top: 10px;
-    color: #3c3c3c;
-}
-
-#app .course-list .price-container {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-}
-
-#app .course-list .price {
-    color: #f40;
-    font-weight: 700;
-}
-
-#app .course-list .control-cart {
-    font-size: 0;
-}
-
-#app .course-list .cart-num {
-    font-size: 10px;
+#app .area h2 {
     text-align: center;
-    width: 40px;
-    padding: 2px 0 3px;
-    vertical-align: top;
-    border: 1px solid #eee;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    font-size: 20px;
+}
+
+#app .area ul {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+}
+
+#app .area ul li {
+    margin-bottom: 20px;
+}
+
+#app .area ul li h3 {
+    margin-bottom: 8px;
+}
+
+#app .area ul li input[type='text'], #app .area ul li textarea {
+    width: 250px;
+    height: 25px;
+    padding-left: 8px;
+    border-radius: 5px;
+    border: 1px solid #888;
+    font-size: 12px;
     outline: none;
 }
 
-#app .course-list .add-cart, #app .course-list .minus-cart {
-    padding: 0 5px;
-    background-color: #fff;
-    border: 1px solid #eee;
-    outline: none;
+#app .area ul li input[type='radio'], #app .area ul li input[type='checkbox'] {
+    margin-bottom: 8px;
 }
 
-#app .control {
-    display: flex;
-    justify-content: space-between;
-    font-size: 10px;
-}
-
-#app .select {
-    display: flex;
-    align-items: center;
-    color: #3c3c3c;
-}
-
-#app .select-all {
-    margin-right: 5px;
-}
-
-#app .price-container {
-    display: flex;
-    align-items: center;
-}
-
-#app .price {
-    color: #f40;
-    margin-right: 5px;
-}
-
-#app .accounts {
-    width: 70px;
-    height: 30px;
-    color: rgba(255, 255, 255, 0.8);
-    background-color: #f40;
-    border: none;
-    border-radius: 15px;
-    font-size: 8px;
+#app .area ul li textarea {
+    padding-top: 8px;
+    height: 100px;
 }
